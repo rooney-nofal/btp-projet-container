@@ -1,0 +1,58 @@
+version: "3.9"
+
+services:
+  db:
+    image: mariadb:11
+    container_name: infra_music_db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+
+  api:
+    build: ./api
+    container_name: infra_music_api
+    restart: unless-stopped
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME: ${MYSQL_DATABASE}
+      DB_USER: ${MYSQL_USER}
+      DB_PASSWORD: ${MYSQL_PASSWORD}
+      FLASK_ENV: production
+    ports:
+      - "8000:8000"
+
+  adminer:
+    image: adminer
+    container_name: infra_music_adminer
+    restart: unless-stopped
+    depends_on:
+      - db
+    ports:
+      - "8081:8080"
+
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    container_name: infra_music_swagger
+    restart: unless-stopped
+    depends_on:
+      - api
+    environment:
+      SWAGGER_JSON: /swagger/swagger.yaml
+    volumes:
+      - ./swagger/swagger.yaml:/swagger/swagger.yaml:ro
+    ports:
+      - "8080:8080"
+
+volumes:
+  db_data:

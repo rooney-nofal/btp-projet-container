@@ -1,0 +1,447 @@
+openapi: 3.0.3
+info:
+  title: InfraMusicStore API
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000
+paths:
+  /api/artists:
+    get:
+      summary: List all artists
+      tags: [Artists]
+      responses:
+        "200":
+          description: List of artists
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Artist"
+    post:
+      summary: Create a new artist
+      tags: [Artists]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ArtistCreate"
+      responses:
+        "201":
+          description: Artist created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Artist"
+  /api/artists/{artistId}:
+    get:
+      summary: Get artist by ID
+      tags: [Artists]
+      parameters:
+        - in: path
+          name: artistId
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Artist found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Artist"
+        "404":
+          description: Artist not found
+    put:
+      summary: Update artist
+      tags: [Artists]
+      parameters:
+        - in: path
+          name: artistId
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ArtistCreate"
+      responses:
+        "200":
+          description: Artist updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Artist"
+        "404":
+          description: Artist not found
+    delete:
+      summary: Delete artist
+      tags: [Artists]
+      parameters:
+        - in: path
+          name: artistId
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Artist deleted
+        "404":
+          description: Artist not found
+
+  /api/albums:
+    get:
+      summary: List all albums
+      tags: [Albums]
+      responses:
+        "200":
+          description: List of albums
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Album"
+    post:
+      summary: Create a new album
+      tags: [Albums]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AlbumCreate"
+      responses:
+        "201":
+          description: Album created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Album"
+
+  /api/albums/{albumId}:
+    get:
+      summary: Get album by ID
+      tags: [Albums]
+      parameters:
+        - in: path
+          name: albumId
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Album found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Album"
+        "404":
+          description: Album not found
+    put:
+      summary: Update album
+      tags: [Albums]
+      parameters:
+        - in: path
+          name: albumId
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AlbumCreate"
+      responses:
+        "200":
+          description: Album updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Album"
+        "404":
+          description: Album not found
+    delete:
+      summary: Delete album
+      tags: [Albums]
+      parameters:
+        - in: path
+          name: albumId
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Album deleted
+        "404":
+          description: Album not found
+
+  /api/genres:
+    get:
+      summary: List all genres
+      tags: [Genres]
+      responses:
+        "200":
+          description: List of genres
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Genre"
+    post:
+      summary: Create a new genre
+      tags: [Genres]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GenreCreate"
+      responses:
+        "201":
+          description: Genre created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Genre"
+
+  /api/genres/{genreId}:
+    get:
+      summary: Get genre by ID
+      tags: [Genres]
+      parameters:
+        - in: path
+          name: genreId
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Genre found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Genre"
+        "404":
+          description: Genre not found
+    put:
+      summary: Update genre
+      tags: [Genres]
+      parameters:
+        - in: path
+          name: genreId
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GenreCreate"
+      responses:
+        "200":
+          description: Genre updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Genre"
+        "404":
+          description: Genre not found
+    delete:
+      summary: Delete genre
+      tags: [Genres]
+      parameters:
+        - in: path
+          name: genreId
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Genre deleted
+        "404":
+          description: Genre not found
+
+  /api/tracks:
+    get:
+      summary: List all tracks
+      tags: [Tracks]
+      responses:
+        "200":
+          description: List of tracks
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Track"
+    post:
+      summary: Create a new track
+      tags: [Tracks]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TrackCreate"
+      responses:
+        "201":
+          description: Track created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Track"
+
+  /api/tracks/{trackId}:
+    get:
+      summary: Get track by ID
+      tags: [Tracks]
+      parameters:
+        - in: path
+          name: trackId
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Track found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Track"
+        "404":
+          description: Track not found
+    put:
+      summary: Update track
+      tags: [Tracks]
+      parameters:
+        - in: path
+          name: trackId
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TrackCreate"
+      responses:
+        "200":
+          description: Track updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Track"
+        "404":
+          description: Track not found
+    delete:
+      summary: Delete track
+      tags: [Tracks]
+      parameters:
+        - in: path
+          name: trackId
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Track deleted
+        "404":
+          description: Track not found
+
+components:
+  schemas:
+    Artist:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+    ArtistCreate:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+
+    Album:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        artist_id:
+          type: integer
+    AlbumCreate:
+      type: object
+      required: [title, artist_id]
+      properties:
+        title:
+          type: string
+        artist_id:
+          type: integer
+
+    Genre:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+    GenreCreate:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+
+    Track:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        album_id:
+          type: integer
+        genre_id:
+          type: integer
+        composer:
+          type: string
+          nullable: true
+        milliseconds:
+          type: integer
+        bytes:
+          type: integer
+        unit_price:
+          type: number
+          format: float
+    TrackCreate:
+      type: object
+      required: [name, album_id, genre_id, milliseconds, bytes, unit_price]
+      properties:
+        name:
+          type: string
+        album_id:
+          type: integer
+        genre_id:
+          type: integer
+        composer:
+          type: string
+          nullable: true
+        milliseconds:
+          type: integer
+        bytes:
+          type: integer
+        unit_price:
+          type: number
+          format: float
