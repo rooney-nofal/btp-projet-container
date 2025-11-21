@@ -44,3 +44,8 @@ InfraMusicStore is a backend infrastructure for an online music store built for 
 
    ```bash
    cp .env.example .env
+
+## 3. Continuous Integration (CI)
+
+This repository uses a GitHub Actions workflow (`.github/workflows/ci.yml`) that runs on every push to the `master` branch.  
+It automatically installs the API dependencies, runs a Python syntax check, and builds the API Docker image to ensure the project stays deployable.
